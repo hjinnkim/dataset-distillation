@@ -110,7 +110,7 @@ def main(state):
         # test models
         if state.test_nets_type == 'unknown_init':
             test_model, = networks.get_networks(state, N=1)
-            state.test_models = [test_model for _ in range(state.local_test_n_nets)]
+            state.test_models = [test_model for _ in range(state.local_test_n_nets)]            
         elif state.test_nets_type == 'same_as_train':
             assert state.test_n_nets == state.n_nets, \
                 "test_nets_type=same_as_train, expect test_n_nets=n_nets"
@@ -399,6 +399,9 @@ def main(state):
 
 if __name__ == '__main__':
     try:
+        ### Check data loader
+        state = options.get_state()
+        train_loader = state.opt.train_loader
         main(options.get_state())
     except Exception:
         logging.exception("Fatal error:")

@@ -17,6 +17,7 @@ default_dataset_roots = dict(
     Cifar10='./data/cifar10',
     CUB200='./data/birds',
     PASCAL_VOC='./data/pascal_voc',
+    Cifar10_simCLR='./data/cifar10',
 )
 
 
@@ -30,6 +31,7 @@ dataset_normalization = dict(
     CUB200=((0.47850531339645386, 0.4992702007293701, 0.4022205173969269),
             (0.23210887610912323, 0.2277066558599472, 0.26652416586875916)),
     PASCAL_VOC=((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+    Cifar10_simCLR=((0, 0, 0), (1., 1., 1.),)
 )
 
 
@@ -42,6 +44,8 @@ dataset_labels = dict(
              'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
     CUB200=caltech_ucsd_birds.class_labels,
     PASCAL_VOC=pascal_voc.object_categories,
+    Cifar10_simCLR=('plane', 'car', 'bird', 'cat',
+             'deer', 'dog', 'monkey', 'horse', 'ship', 'truck'),
 )
 
 # (nc, real_size, num_classes)
@@ -55,6 +59,7 @@ dataset_stats = dict(
     Cifar10=DatasetStats(3, 32, 10),
     CUB200=DatasetStats(3, 224, 200),
     PASCAL_VOC=DatasetStats(3, 224, 20),
+    Cifar10_simCLR=DatasetStats(3, 32, 10),
 )
 
 assert(set(default_dataset_roots.keys()) == set(dataset_normalization.keys()) ==
@@ -184,6 +189,10 @@ def get_dataset(state, phase):
         if phase == 'train':
             phase = 'trainval'
         return pascal_voc.PASCALVoc2007(root, phase, transforms.Compose(transform_list))
+    elif name == 'Cifar10_simCLR':
+        with suppress_stdout():
+            return datasets.CIFAR10(root, phase == 'train', transforms.ToTensor(), download=True)
+
 
     else:
         raise ValueError('Unsupported dataset: %s' % state.dataset)

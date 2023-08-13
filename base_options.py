@@ -234,7 +234,7 @@ class BaseOptions(object):
         parser.add_argument('--checkpoint_interval', type=int, default=10, metavar='N',
                             help='checkpoint interval (epoch)')
         parser.add_argument('--dataset', type=str, default='MNIST',
-                            help='dataset: MNIST | Cifar10 | PASCAL_VOC | CUB200')
+                            help='dataset: MNIST | Cifar10 | PASCAL_VOC | CUB200 | Cifar10_simCLR')
         parser.add_argument('--source_dataset', type=str, default=None,
                             help='dataset: MNIST | Cifar10 | PASCAL_VOC | CUB200')
         parser.add_argument('--dataset_root', type=str, default=None,
@@ -242,7 +242,7 @@ class BaseOptions(object):
         parser.add_argument('--results_dir', type=str, default='./results/',
                             help='results directory')
         parser.add_argument('--arch', type=str, default='LeNet',
-                            help='architecture: LeNet | AlexNet | etc.')
+                            help='architecture: LeNet | AlexNet | ResNet18SimCLR | ResNet50SimCLR | etc.')
         parser.add_argument('--mode', type=str, default='distill_basic',
                             help='mode: train | distill_basic | distill_attack | distill_adapt ')
         parser.add_argument('--distill_lr', type=float, default=0.02,

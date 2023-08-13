@@ -35,6 +35,9 @@ def load_train_models(state):
 
 
 def task_loss(state, output, label, **kwargs):
+    if 'SimCLR' in state.arch:
+        return output.sum()
+        
     if state.num_classes == 2:
         label = label.to(output, non_blocking=True).view_as(output)
         return F.binary_cross_entropy_with_logits(output, label, **kwargs)
@@ -129,7 +132,11 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
                 else:
                     output = model.forward_with_param(data, param_list[k])
 
-                if num_classes == 2:
+                if 'SimCLR' in state.arch:
+                    pred = torch.zeros_like(target).fill_(-1)
+                    output = output.view(1)
+                    
+                elif num_classes == 2:
                     pred = (output > 0.5).to(target.dtype).view(-1)
                 else:
                     pred = output.argmax(1)  # get the index of the max log-probability
