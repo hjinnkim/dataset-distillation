@@ -121,6 +121,10 @@ def evaluate_models(state, models, param_list=None, test_all=False, test_loader_
 
     with torch.no_grad():
         for i, (data, target) in enumerate(test_loader_iter):
+            
+            if data.size(0) != state.batch_size:
+                break
+            
             data, target = data.to(device, non_blocking=True), target.to(device, non_blocking=True)
             if attack_mode:
                 for n in range(num_classes):

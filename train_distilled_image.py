@@ -89,7 +89,6 @@ class Trainer(object):
         gws = []
 
         for step_i, (data, label, lr) in enumerate(steps):
-            
             with torch.enable_grad():
                 output = model.forward_with_param(data, w)
                 loss = task_loss(state, output, label)
@@ -211,6 +210,10 @@ class Trainer(object):
 
         for epoch, it, (rdata, rlabel) in self.prefetch_train_loader_iter():
             data_t = time.time() - data_t0
+            
+            if rdata.size(0) != state.batch_size:
+                break
+            
             if it == 0:
                 self.scheduler.step()
 
