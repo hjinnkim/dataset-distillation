@@ -1,1 +1,1 @@
-1) python main.py --mode distill_basic --dataset Cifar10_simCLR --device_id 6 --arch ResNet18SimCLR
+1) python main.py --mode distill_basic --dataset Cifar10_simCLR --arch ResNet18SimCLR --device_id 6

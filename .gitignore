@@ -29,3 +29,5 @@ models/
 
 .gdb_history
 /.vscode/*
+/results*/**/
+/slurm/logs/**/
